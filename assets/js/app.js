@@ -36,6 +36,7 @@ function removeTweet(e) {
 
   if (e.target.classList.contains('borrar-tweet')) {
     e.target.parentElement.remove()
+    removeTweetLocalStorage(e.target.parentElement.textContent)
   }
 }
 
@@ -78,4 +79,17 @@ function localStorageReady() {
     li.appendChild(deleteBtn)
     tweetsList.appendChild(li)
   })
+}
+function removeTweetLocalStorage(tweet) {
+  let tweets, tweetToDelete;
+  tweetToDelete = tweet.substring(0, tweet.length - 1)
+  tweets = getTweetsFromLocalStorage()
+
+  tweets.forEach((tweet, index) => {
+    if(tweetToDelete === tweet) {
+      tweets.splice(index, 1)
+    }
+  })
+
+  localStorage.setItem('tweets', JSON.stringify(tweets))
 }
