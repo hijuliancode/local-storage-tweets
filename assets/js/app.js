@@ -26,6 +26,8 @@ function addTweet(e) {
   li.textContent = tweet
   li.appendChild(deleteBtn)
   tweetsList.appendChild(li)
+
+  addTweetToLocalStorage(tweet)
 }
 
 function removeTweet(e) {
@@ -34,4 +36,24 @@ function removeTweet(e) {
   if (e.target.classList.contains('borrar-tweet')) {
     e.target.parentElement.remove()
   }
+}
+
+function addTweetToLocalStorage(tweet) {
+  let tweets = getTweetsFromLocalStorage()
+
+  tweets.push(tweet)
+
+  localStorage.setItem('tweets', JSON.stringify(tweets))
+}
+
+function getTweetsFromLocalStorage() {
+  let tweets,
+      LSItems = localStorage.getItem('tweets');
+
+  if (LSItems === null) {
+    tweets = []
+  } else {
+    tweets = JSON.parse(LSItems)
+  }
+  return tweets
 }
