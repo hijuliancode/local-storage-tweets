@@ -7,13 +7,14 @@ eventListeners()
 function eventListeners() {
   // form submit
   form.addEventListener('submit', addTweet)
+  tweetsList.addEventListener('click', removeTweet)
 }
 
 // functions
 function addTweet(e) {
   e.preventDefault()
   // read textarea value
-  const tweet = document.getElementById('tweet').value;
+  const tweet = document.getElementById('tweet').value
   // create delete button
   const deleteBtn = document.createElement('a')
   deleteBtn.classList = 'borrar-tweet'
@@ -25,5 +26,12 @@ function addTweet(e) {
   li.textContent = tweet
   li.appendChild(deleteBtn)
   tweetsList.appendChild(li)
+}
 
+function removeTweet(e) {
+  e.preventDefault()
+
+  if (e.target.classList.contains('borrar-tweet')) {
+    e.target.parentElement.remove()
+  }
 }
