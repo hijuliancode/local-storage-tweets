@@ -8,6 +8,7 @@ function eventListeners() {
   // form submit
   form.addEventListener('submit', addTweet)
   tweetsList.addEventListener('click', removeTweet)
+  document.addEventListener('DOMContentLoaded', localStorageReady)
 }
 
 // functions
@@ -44,6 +45,7 @@ function addTweetToLocalStorage(tweet) {
   tweets.push(tweet)
 
   localStorage.setItem('tweets', JSON.stringify(tweets))
+
 }
 
 function getTweetsFromLocalStorage() {
@@ -56,4 +58,24 @@ function getTweetsFromLocalStorage() {
     tweets = JSON.parse(LSItems)
   }
   return tweets
+}
+
+function localStorageReady() {
+  let tweets;
+
+  tweets = getTweetsFromLocalStorage()
+
+  tweets.forEach(tweet => {
+    // create delete button
+    const deleteBtn = document.createElement('a')
+    deleteBtn.classList = 'borrar-tweet'
+    deleteBtn.textContent = 'X'
+
+
+    // create element and add to list
+    const li = document.createElement('li')
+    li.textContent = tweet
+    li.appendChild(deleteBtn)
+    tweetsList.appendChild(li)
+  })
 }
